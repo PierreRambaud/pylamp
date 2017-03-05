@@ -6,7 +6,7 @@ Python script to power the Dreamcheeky USB webmail notifier gadget. <http://www.
 
 ##Supported python version
 
-This tool was test with python `3.2` and `3.3`.
+This tool was test with python `3.2` and higher.
 
 ##Installation
 
@@ -24,18 +24,20 @@ $ cd pylamp
 $ ./pylamp --help
 ```
 
-##Usage
+## Usage
 ```
+$ pylamp -h
 usage: pylamp [-h] [-c COLOR] [-r RED] [-g GREEN] [-b BLUE] [-fi FADEIN]
-               [-bl BLINK]
+              [-bl BLINK]
 
-Python script to power the Dreamcheeky USB webmail notifier gadget which is shipped with windows only software. by Pierre Rambaud
+Python script to power the Dreamcheeky USB webmail notifier gadget which is
+shipped with windows only software. by Pierre Rambaud
 <https://github.com/PierreRambaud/pylamp>
 
 optional arguments:
   -h, --help            show this help message and exit
   -c COLOR, --color COLOR
-                        Color as hexadecimal or string (#112233 or 'blue')
+                        Color as hexadecimal or string (#0000FF or 'blue')
   -r RED, --red RED     Red
   -g GREEN, --green GREEN
                         Green
@@ -48,13 +50,14 @@ optional arguments:
 
 ## Troubleshooting
 
-Should be run as root unless the necessary udev rules are set.
+Must be run as root unless the necessary udev rules are set.
 Create the file `/etc/udev/rules.d/42-pylamp.rules`
-And add this content by replacing `got` by your username:
+And add this content by replacing `USERNAME` by your username:
+
 ```
 SUBSYSTEM !="usb_device", ACTION !="add", GOTO="datalogger_rules_end"
 SYSFS{idVendor} =="1d34", SYSFS{idProduct} =="0004", SYMLINK+="datalogger"
-MODE="0666", OWNER="got", GROUP="root"
+MODE="0666", OWNER="USERNAME", GROUP="root"
 LABEL="datalogger_rules_end"
 ```
 
@@ -62,26 +65,26 @@ LABEL="datalogger_rules_end"
 
 Install dependencies:
 
-`$ ./setup.py test`
+```
+$ ./setup.py test
+```
 
 To run unit tests:
-`$ ./setup.py nose`
-or
-`$ nosetests`
+
+```
+$ ./setup.py nosetests
+$ # or
+$ nosetests
+```
 
 To check code style:
 
-`$ ./setup.py flake8`
-
-or
-
-`$ flake8 ./`
-
+```
+$ ./setup.py flake8
+$ # or
+$ flake8
+```
 
 ## License
 
-   See [LICENSE.md](LICENSE.md) file
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/PierreRambaud/pylamp/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+See [LICENSE.md](LICENSE.md) file

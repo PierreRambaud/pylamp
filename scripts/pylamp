@@ -5,7 +5,7 @@ from pylamp.color import Color
 from pylamp.controller import Controller
 
 
-def __parser__():
+def __get_parser():
     description = """
             Python script to power the Dreamcheeky
             USB webmail notifier gadget which is shipped
@@ -17,7 +17,7 @@ def __parser__():
     parser.add_argument(
         "-c",
         "--color",
-        help="Color as hexadecimal or string (#112233 or 'blue')",
+        help="Color as hexadecimal or string (#0000FF or 'blue')",
         type=str
     )
     parser.add_argument(
@@ -39,7 +39,7 @@ def __parser__():
     return parser
 
 def main():
-    parser = __parser__()
+    parser = __get_parser()
     args = parser.parse_args()
 
     lamp = Controller()
