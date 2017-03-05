@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+
+import argparse
+from pylamp.color import Color
+from pylamp.controller import Controller
+
+
+def __parser__():
+    description = """
+            Python script to power the Dreamcheeky
+            USB webmail notifier gadget which is shipped
+            with windows only software.
+
+            by Pierre Rambaud <https://github.com/PierreRambaud/pylamp>
+        """
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument(
+        "-c",
+        "--color",
+        help="Color as hexadecimal or string (#112233 or 'blue')",
+        type=str
+    )
+    parser.add_argument(
+        "-r", "--red", help="Red", type=int
+    )
+    parser.add_argument(
+        "-g", "--green", help="Green", type=int
+    )
+    parser.add_argument(
+        "-b", "--blue", help="Blue", type=int
+    )
+    parser.add_argument(
+        "-fi", "--fadein", help="Fade in effect, delay in second", type=int
+    )
+    parser.add_argument(
+        "-bl", "--blink", help="Blink effect, delay in second", type=int
+    )
+
+    return parser
+
+def main():
+    parser = __parser__()
+    args = parser.parse_args()
+
+    lamp = Controller()
+    if lamp.open().is_connected() is True:
+        lamp.prepare().switch_off()
+
+        if args.color is not None:
+            color = Color(args.color)
+        else:
+            color = Color(args.red, args.green, args.blue)
+
+        if args.fadein is not None:
+            lamp.fade_in(args.fadein, color)
+        elif args.blink is not None:
+            lamp.blink(args.blink, color)
+        else:
+            lamp.set_color(color)
+
+if __name__ == "__main__":
+    main()

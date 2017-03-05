@@ -1,0 +1,11 @@
+dist
+*.egg-info
+.eggs
+build/*
+!build/.keep
+.coverage
+
+*.pyc
+
+.project
+.pydevproject
