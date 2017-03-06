@@ -12,8 +12,8 @@ setup(
     license='GPLv3',
     scripts=['scripts/pylamp'],
     packages=['pylamp'],
-    requires=['pyusb (>= 1.0.0b1)'],
-    install_requires=['pyusb>=1.0.0b1'],
+    requires=['pyusb (>= 1.0.0)'],
+    install_requires=['pyusb>=1.0.0'],
     tests_require=[
         'coverage',
         'pep8',

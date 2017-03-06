@@ -1,0 +1,6 @@
+pyusb>=1.0.0
+pep8
+flake8
+mock
+nose
+coverage

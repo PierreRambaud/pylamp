@@ -1,0 +1,5 @@
+pep8
+flake8
+mock
+nose
+coverage

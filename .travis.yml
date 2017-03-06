@@ -8,7 +8,8 @@ python:
 
 install:
   - pip install .
+  - pip install -r reqs/requirements.txt
 
 script:
-  - ./setup.py flake8
-  - ./setup.py nosetests
+  - flake8
+  - nosetests
