@@ -1,14 +1,14 @@
-#WebMail Notifier with python (Dream Cheeky)
+# WebMail Notifier with python (Dream Cheeky)
 
 [![Build Status](https://travis-ci.org/PierreRambaud/pylamp.png?branch=master)](https://travis-ci.org/PierreRambaud/pylamp)
 
 Python script to power the Dreamcheeky USB webmail notifier gadget. <http://www.dreamcheeky.com/webmail-notifier>
 
-##Supported python version
+## Supported python version
 
 This tool was test with python `3.2` and higher.
 
-##Installation
+## Installation
 
 From Pypi
 
