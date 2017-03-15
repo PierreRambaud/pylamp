@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='PyLamp',
-    version='1.0',
+    version='2.0',
     description='WebMail Notifier python script',
     author='Pierre Rambaud (GoT)',
     author_email='pierre.rambaud86@gmail.com',
