@@ -12,20 +12,21 @@ This tool was test with python `3.2` and higher.
 
 From Pypi
 
-```
+```bash
 $ pip install pylamp
 ```
 
 From Github
 
-```
+```bash
 $ git clone https://github.com/PierreRambaud/pylamp.git
 $ cd pylamp
 $ ./pylamp --help
 ```
 
 ## Usage
-```
+
+```bash
 $ pylamp -h
 usage: pylamp [-h] [-c COLOR] [-r RED] [-g GREEN] [-b BLUE] [-fi FADEIN]
               [-bl BLINK]
@@ -57,7 +58,7 @@ Create the file `/etc/udev/rules.d/42-pylamp.rules`
 And add this content by replacing `USERNAME` by your username:
 
 
-```
+```bash
 SUBSYSTEM !="usb_device", ACTION !="add", GOTO="datalogger_rules_end"
 SYSFS{idVendor} =="1d34", SYSFS{idProduct} =="0004", SYMLINK+="datalogger"
 MODE="0666", OWNER="USERNAME", GROUP="root"
@@ -68,13 +69,13 @@ LABEL="datalogger_rules_end"
 
 Install dependencies:
 
-```
+```bash
 $ ./setup.py test
 ```
 
 To run unit tests:
 
-```
+```bash
 $ ./setup.py nosetests
 $ # or
 $ nosetests
@@ -82,7 +83,7 @@ $ nosetests
 
 To check code style:
 
-```
+```bash
 $ ./setup.py flake8
 $ # or
 $ flake8
