@@ -55,13 +55,18 @@ class Controller:
         :param list data:
         :return bool:
         """
+        request_type = usb.TYPE_CLASS + usb.RECIP_INTERFACE
+        request = 0x09
+        value = 0x81
+        index = 0x00
+        timeout = 100
         return self.device.ctrl_transfer(
-            request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-            request=0x09,
-            value=0x81,
-            index=0x00,
-            data=data,
-            timeout=100
+            request_type,
+            request,
+            value,
+            index,
+            data,
+            timeout
         ) == 8
 
     def set_color(self, color: Color):

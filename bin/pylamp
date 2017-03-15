@@ -38,12 +38,13 @@ def __get_parser():
 
     return parser
 
+
 def main():
     parser = __get_parser()
     args = parser.parse_args()
 
     lamp = Controller()
-    if lamp.open().is_connected() is True:
+    if lamp.open() and lamp.is_connected() is True:
         lamp.prepare().switch_off()
 
         if args.color is not None:
@@ -57,6 +58,7 @@ def main():
             lamp.blink(args.blink, color)
         else:
             lamp.set_color(color)
+
 
 if __name__ == "__main__":
     main()

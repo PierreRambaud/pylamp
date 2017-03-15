@@ -10,7 +10,7 @@ setup(
     author_email='pierre.rambaud86@gmail.com',
     url='https://github.com/PierreRambaud/pylamp',
     license='GPLv3',
-    scripts=['scripts/pylamp'],
+    scripts=['bin/pylamp'],
     packages=['pylamp'],
     requires=['pyusb (>= 1.0.0)'],
     install_requires=['pyusb>=1.0.0'],

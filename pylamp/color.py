@@ -1,25 +1,25 @@
 class Color:
-    """
+    '''
     This class define a color
-    """
+    '''
     max_value = 0x40
     red = None
     green = None
     blue = None
 
     def __init__(self, red: int=None, green: int=None, blue: int=None):
-        """
+        '''
         Initiliaz color
-        """
+        '''
         self.set(red, green, blue)
 
     def set(self, red, green: int=None, blue: int=None):
-        """
+        '''
         Set new color value
         :param mixed red:
         :param int green:
         :param int blue:
-        """
+        '''
         if isinstance(red, str) and green is None and blue is None:
             if red[0] in ('#', '_'):
                 return self.__from_hex(red)
@@ -37,17 +37,17 @@ class Color:
         self.blue = self.__get_value(blue)
 
     def __get_value(self, value: int) -> int:
-        """
+        '''
         Get value, if value is higher than the max value
         return self.max_value, else, if lower than 0,
         return 0.
-        """
+        '''
         return min(max(0, int(value)), self.max_value)
 
     def __from_hex(self, string: str):
-        """
+        '''
         Convert hexadecimal string to color
-        """
+        '''
         string = string.lstrip('#_')
 
         if len(string) not in (3, 6):
@@ -66,7 +66,7 @@ class Color:
         )
 
     def __from_string(self, string: str):
-        """
+        '''
         Convert simple string to color
         Available values:
         - red
@@ -76,20 +76,26 @@ class Color:
         - magenta
         - cyan
         - yellow
-        """
-        if string == "red":
+        '''
+        if string == 'red':
             return self.set(self.max_value, 0, 0)
-        elif string == "green":
+        elif string == 'green':
             return self.set(0, self.max_value, 0)
-        elif string == "blue":
+        elif string == 'blue':
             return self.set(0, 0, self.max_value)
-        elif string == "white":
+        elif string == 'white':
             return self.set(self.max_value, self.max_value, self.max_value)
-        elif string == "magenta":
+        elif string == 'magenta':
             return self.set(self.max_value, 0, self.max_value)
-        elif string == "cyan":
+        elif string == 'purple':
+            return self.set(
+                self.max_value / 2,
+                self.max_value / 2,
+                self.max_value / 2
+            )
+        elif string == 'cyan':
             return self.set(0, self.max_value, self.max_value)
-        elif string == "yellow":
+        elif string == 'yellow':
             return self.set(self.max_value, self.max_value, 0)
         else:
             return self.set(0, 0, 0)

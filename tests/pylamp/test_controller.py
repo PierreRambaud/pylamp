@@ -25,7 +25,7 @@ class ControllerTest(unittest.TestCase):
         self.assertIsNone(self.controller.device)
 
     def test_open_without_pylamp(self):
-        with patch("usb.core.find", return_value=None) as find_patch:
+        with patch('usb.core.find', return_value=None) as find_patch:
             self.assertFalse(self.controller.open())
             self.assertFalse(self.controller.is_connected())
             find_patch.assert_called_once_with(
@@ -40,7 +40,7 @@ class ControllerTest(unittest.TestCase):
         device.detach_kernel_driver.return_value = None
         device.set_configuration.return_value = None
 
-        with patch("usb.core.find", return_value=device) as find_patch:
+        with patch('usb.core.find', return_value=device) as find_patch:
             self.assertIsInstance(self.controller.open(), Controller)
             self.assertTrue(self.controller.is_connected())
             find_patch.assert_called_once_with(
@@ -60,12 +60,12 @@ class ControllerTest(unittest.TestCase):
         self.controller.device = device
         self.assertFalse(self.controller.send('test'))
         device.ctrl_transfer.assert_called_once_with(
-            request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-            request=0x09,
-            value=0x81,
-            index=0x00,
-            data='test',
-            timeout=100,
+            usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+            0x09,
+            0x81,
+            0x00,
+            'test',
+            100,
         )
 
     def test_send(self):
@@ -74,12 +74,12 @@ class ControllerTest(unittest.TestCase):
         self.controller.device = device
         self.assertTrue(self.controller.send(111))
         device.ctrl_transfer.assert_called_once_with(
-            request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-            request=0x09,
-            value=0x81,
-            index=0x00,
-            data=111,
-            timeout=100,
+            usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+            0x09,
+            0x81,
+            0x00,
+            111,
+            100,
         )
 
     def test_prepare(self):
@@ -89,39 +89,39 @@ class ControllerTest(unittest.TestCase):
         self.controller.prepare()
         assert device.ctrl_transfer.mock_calls == [
             call(
-                request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-                request=0x09,
-                value=0x81,
-                index=0x00,
-                data=self.controller.INIT_PACKET1,
-                timeout=100
+                usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+                0x09,
+                0x81,
+                0x00,
+                self.controller.INIT_PACKET1,
+                100
             ),
             call(
-                request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-                request=0x09,
-                value=0x81,
-                index=0x00,
-                data=self.controller.INIT_PACKET2,
-                timeout=100
+                usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+                0x09,
+                0x81,
+                0x00,
+                self.controller.INIT_PACKET2,
+                100
             )
         ]
 
     def test_set_color_with_error(self):
-        self.assertRaises(TypeError, self.controller.set_color, "test")
+        self.assertRaises(TypeError, self.controller.set_color, 'test')
 
     def test_set_color(self):
-        color = Color("cyan")
+        color = Color('cyan')
         device = Mock(spec=usb.core.Device)
         device.ctrl_transfer.return_value = 8
         self.controller.device = device
         self.controller.set_color(color)
         self.assertEqual(color, self.controller.color)
         device.ctrl_transfer.assert_called_once_with(
-            request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-            request=0x09,
-            value=0x81,
-            index=0x00,
-            data=(
+            usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+            0x09,
+            0x81,
+            0x00,
+            (
                 color.red,
                 color.green,
                 color.blue,
@@ -130,7 +130,7 @@ class ControllerTest(unittest.TestCase):
                 0x00,
                 0x05
             ),
-            timeout=100
+            100
         )
 
     def test_switch_off(self):
@@ -139,20 +139,20 @@ class ControllerTest(unittest.TestCase):
         self.controller.device = device
         self.controller.switch_off()
         device.ctrl_transfer.assert_called_once_with(
-            request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-            request=0x09,
-            value=0x81,
-            index=0x00,
-            data=(0, 0, 0, 0x00, 0x00, 0x00, 0x00, 0x05),
-            timeout=100
+            usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+            0x09,
+            0x81,
+            0x00,
+            (0, 0, 0, 0x00, 0x00, 0x00, 0x00, 0x05),
+            100
         )
 
     def test_blink(self):
         device = Mock(spec=usb.core.Device)
         device.ctrl_transfer.return_value = 8
         self.controller.device = device
-        with patch("time.sleep", return_value=None) as sleep_patch:
-            self.controller.blink(2, Color("blue"))
+        with patch('time.sleep', return_value=None) as sleep_patch:
+            self.controller.blink(2, Color('blue'))
             self.assertEqual(
                 sleep_patch.call_count,
                 4
@@ -160,36 +160,36 @@ class ControllerTest(unittest.TestCase):
 
             assert device.ctrl_transfer.mock_calls == [
                 call(
-                    request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-                    request=0x09,
-                    value=0x81,
-                    index=0x00,
-                    data=(0, 0, 64, 0x00, 0x00, 0x00, 0x00, 0x05),
-                    timeout=100
+                    usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+                    0x09,
+                    0x81,
+                    0x00,
+                    (0, 0, 64, 0x00, 0x00, 0x00, 0x00, 0x05),
+                    100
                 ),
                 call(
-                    request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-                    request=0x09,
-                    value=0x81,
-                    index=0x00,
-                    data=(0, 0, 0, 0x00, 0x00, 0x00, 0x00, 0x05),
-                    timeout=100
+                    usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+                    0x09,
+                    0x81,
+                    0x00,
+                    (0, 0, 0, 0x00, 0x00, 0x00, 0x00, 0x05),
+                    100
                 ),
                 call(
-                    request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-                    request=0x09,
-                    value=0x81,
-                    index=0x00,
-                    data=(0, 0, 64, 0x00, 0x00, 0x00, 0x00, 0x05),
-                    timeout=100
+                    usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+                    0x09,
+                    0x81,
+                    0x00,
+                    (0, 0, 64, 0x00, 0x00, 0x00, 0x00, 0x05),
+                    100
                 ),
                 call(
-                    request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-                    request=0x09,
-                    value=0x81,
-                    index=0x00,
-                    data=(0, 0, 0, 0x00, 0x00, 0x00, 0x00, 0x05),
-                    timeout=100
+                    usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+                    0x09,
+                    0x81,
+                    0x00,
+                    (0, 0, 0, 0x00, 0x00, 0x00, 0x00, 0x05),
+                    100
                 )
             ]
 
@@ -198,8 +198,8 @@ class ControllerTest(unittest.TestCase):
         device.ctrl_transfer.return_value = 8
         self.controller.device = device
         self.controller.switch_off()
-        with patch("time.sleep", return_value=None) as sleep_patch:
-            self.controller.fade_in(1, Color("blue"))
+        with patch('time.sleep', return_value=None) as sleep_patch:
+            self.controller.fade_in(1, Color('blue'))
             self.assertEqual(
                 sleep_patch.call_count,
                 64
@@ -209,10 +209,10 @@ class ControllerTest(unittest.TestCase):
                 65
             )
             device.ctrl_transfer.assert_any_call(
-                request_type=usb.TYPE_CLASS + usb.RECIP_INTERFACE,
-                request=0x09,
-                value=0x81,
-                index=0x00,
-                data=(0, 0, 0, 0x00, 0x00, 0x00, 0x00, 0x05),
-                timeout=100
+                usb.TYPE_CLASS + usb.RECIP_INTERFACE,
+                0x09,
+                0x81,
+                0x00,
+                (0, 0, 0, 0x00, 0x00, 0x00, 0x00, 0x05),
+                100
             )

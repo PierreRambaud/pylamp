@@ -51,8 +51,11 @@ optional arguments:
 ## Troubleshooting
 
 Must be run as root unless the necessary udev rules are set.
+
 Create the file `/etc/udev/rules.d/42-pylamp.rules`
+
 And add this content by replacing `USERNAME` by your username:
+
 
 ```
 SUBSYSTEM !="usb_device", ACTION !="add", GOTO="datalogger_rules_end"
