@@ -9,7 +9,7 @@ class Color:
 
     def __init__(self, red: int=None, green: int=None, blue: int=None):
         '''
-        Initiliaz color
+        Initiliaze color
         '''
         self.set(red, green, blue)
 
@@ -51,7 +51,7 @@ class Color:
         string = string.lstrip('#_')
 
         if len(string) not in (3, 6):
-            raise ValueError('Wrong lenght for hexadecimal string')
+            raise ValueError('Wrong length for hexadecimal string')
 
         if len(string) == 6:
             return self.set(
