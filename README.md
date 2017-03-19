@@ -1,4 +1,4 @@
-# Python script to control usb leds
+# Python script to control USB leds
 
 [![Build Status](https://travis-ci.org/PierreRambaud/pylamp.png?branch=master)](https://travis-ci.org/PierreRambaud/pylamp)
 
