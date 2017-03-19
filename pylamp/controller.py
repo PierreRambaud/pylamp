@@ -1,17 +1,13 @@
 import usb
 import time
 from .color import Color
+from .providers import get_providers
 
 
 class Controller:
     """
     Controller, send packet to the lamp
     """
-    VENDOR_ID = 0x1d34
-    PRODUCT_ID = 0x0004
-    INIT_PACKET1 = (0x1F, 0x01, 0x29, 0x00, 0xB8, 0x54, 0x2C, 0x03)
-    INIT_PACKET2 = (0x00, 0x01, 0x29, 0x00, 0xB8, 0x54, 0x2C, 0x04)
-
     device = None
     color = None
 
@@ -19,19 +15,20 @@ class Controller:
         """
         Open connection to device
         """
-        device = usb.core.find(
-            idVendor=self.VENDOR_ID,
-            idProduct=self.PRODUCT_ID
-        )
 
-        if device is None:
+        for provider in get_providers():
+            usb_device = usb.core.find(
+                idVendor=provider.VENDOR_ID,
+                idProduct=provider.PRODUCT_ID
+            )
+            if usb_device is not None:
+                break
+
+        if usb_device is None:
             return False
 
-        self.device = device
-        if self.device.is_kernel_driver_active(0):
-            self.device.detach_kernel_driver(0)
-        self.device.set_configuration()
-
+        self.device = provider(usb_device)
+        self.device.prepare()
         return self
 
     def is_connected(self) -> bool:
@@ -39,35 +36,6 @@ class Controller:
         Check if device is connected
         """
         return self.device is not None
-
-    def prepare(self):
-        """
-        Prepare controller to receive some data
-        """
-        self.send(self.INIT_PACKET1)
-        self.send(self.INIT_PACKET2)
-
-        return self
-
-    def send(self, data: list) -> bool:
-        """
-        Send data to usb controller
-        :param list data:
-        :return bool:
-        """
-        request_type = usb.TYPE_CLASS + usb.RECIP_INTERFACE
-        request = 0x09
-        value = 0x81
-        index = 0x00
-        timeout = 100
-        return self.device.ctrl_transfer(
-            request_type,
-            request,
-            value,
-            index,
-            data,
-            timeout
-        ) == 8
 
     def set_color(self, color: Color):
         """
@@ -78,17 +46,7 @@ class Controller:
             raise TypeError('Must be an instance of Color')
 
         self.color = color
-        data = (
-            color.red,
-            color.green,
-            color.blue,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x05
-        )
-        self.send(data)
+        self.device.colorize(color)
 
     def switch_off(self):
         """

@@ -1,8 +1,8 @@
 class Color:
     '''
-    This class define a color
+    This class define a color by his red, green and blue
     '''
-    max_value = 0x40
+    MAX_VALUE = 0x40
     red = None
     green = None
     blue = None
@@ -39,10 +39,10 @@ class Color:
     def __get_value(self, value: int) -> int:
         '''
         Get value, if value is higher than the max value
-        return self.max_value, else, if lower than 0,
+        return self.MAX_VALUE, else, if lower than 0,
         return 0.
         '''
-        return min(max(0, int(value)), self.max_value)
+        return min(max(0, int(value)), self.MAX_VALUE)
 
     def __from_hex(self, string: str):
         '''
@@ -78,24 +78,24 @@ class Color:
         - yellow
         '''
         if string == 'red':
-            return self.set(self.max_value, 0, 0)
+            return self.set(self.MAX_VALUE, 0, 0)
         elif string == 'green':
-            return self.set(0, self.max_value, 0)
+            return self.set(0, self.MAX_VALUE, 0)
         elif string == 'blue':
-            return self.set(0, 0, self.max_value)
+            return self.set(0, 0, self.MAX_VALUE)
         elif string == 'white':
-            return self.set(self.max_value, self.max_value, self.max_value)
+            return self.set(self.MAX_VALUE, self.MAX_VALUE, self.MAX_VALUE)
         elif string == 'magenta':
-            return self.set(self.max_value, 0, self.max_value)
+            return self.set(self.MAX_VALUE, 0, self.MAX_VALUE)
         elif string == 'purple':
             return self.set(
-                self.max_value / 2,
-                self.max_value / 2,
-                self.max_value / 2
+                self.MAX_VALUE / 2,
+                self.MAX_VALUE / 2,
+                self.MAX_VALUE / 2
             )
         elif string == 'cyan':
-            return self.set(0, self.max_value, self.max_value)
+            return self.set(0, self.MAX_VALUE, self.MAX_VALUE)
         elif string == 'yellow':
-            return self.set(self.max_value, self.max_value, 0)
+            return self.set(self.MAX_VALUE, self.MAX_VALUE, 0)
         else:
             return self.set(0, 0, 0)

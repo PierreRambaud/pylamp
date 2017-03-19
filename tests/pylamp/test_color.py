@@ -9,7 +9,7 @@ class ColorTest(unittest.TestCase):
         self.color = Color()
 
     def test_init(self):
-        self.assertEqual(0x40, self.color.max_value)
+        self.assertEqual(0x40, self.color.MAX_VALUE)
 
     def test_set(self):
         self.color.set(10, 11, 12)
@@ -60,6 +60,10 @@ class ColorTest(unittest.TestCase):
         self.assertEqual(64, self.color.red)
         self.assertEqual(64, self.color.green)
         self.assertEqual(0, self.color.blue)
+        self.color.set('purple')
+        self.assertEqual(32, self.color.red)
+        self.assertEqual(32, self.color.green)
+        self.assertEqual(32, self.color.blue)
         self.color.set('nothing')
         self.assertEqual(0, self.color.red)
         self.assertEqual(0, self.color.green)

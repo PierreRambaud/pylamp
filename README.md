@@ -1,8 +1,10 @@
-# WebMail Notifier with python (Dream Cheeky)
+# Python script to control usb leds
 
 [![Build Status](https://travis-ci.org/PierreRambaud/pylamp.png?branch=master)](https://travis-ci.org/PierreRambaud/pylamp)
 
-Python script to power the Dreamcheeky USB webmail notifier gadget. <http://www.dreamcheeky.com/webmail-notifier>
+## Supported USB leds:
+
+-  WebMail Notifier with python [Dream Cheeky](http://www.dreamcheeky.com/webmail-notifier)
 
 ## Supported python version
 

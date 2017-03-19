@@ -6,34 +6,49 @@ from pylamp.controller import Controller
 
 
 def __get_parser():
-    description = """
+    description = '''
             Python script to power the Dreamcheeky
             USB webmail notifier gadget which is shipped
             with windows only software.
 
             by Pierre Rambaud <https://github.com/PierreRambaud/pylamp>
-        """
+        '''
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument(
-        "-c",
-        "--color",
+        '-c',
+        '--color',
         help="Color as hexadecimal or string (#0000FF or 'blue')",
         type=str
     )
     parser.add_argument(
-        "-r", "--red", help="Red", type=int
+        '-r',
+        '--red',
+        help='Red',
+        type=int
     )
     parser.add_argument(
-        "-g", "--green", help="Green", type=int
+        '-g',
+        '--green',
+        help='Green',
+        type=int
     )
     parser.add_argument(
-        "-b", "--blue", help="Blue", type=int
+        '-b',
+        '--blue',
+        help='Blue',
+        type=int
     )
     parser.add_argument(
-        "-fi", "--fadein", help="Fade in effect, delay in second", type=int
+        '-fi',
+        '--fadein',
+        help='Fade in effect, delay in second',
+        type=int
     )
     parser.add_argument(
-        "-bl", "--blink", help="Blink effect, delay in second", type=int
+        '-bl',
+        '--blink',
+        help='Blink effect, delay in second',
+        type=int
     )
 
     return parser
@@ -45,7 +60,7 @@ def main():
 
     lamp = Controller()
     if lamp.open() and lamp.is_connected() is True:
-        lamp.prepare().switch_off()
+        lamp.switch_off()
 
         if args.color is not None:
             color = Color(args.color)
@@ -60,5 +75,5 @@ def main():
             lamp.set_color(color)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
